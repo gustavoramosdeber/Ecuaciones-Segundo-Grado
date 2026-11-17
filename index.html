@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14243a">
+  <meta name="description" content="Matemática Challenge: aprende y practica ecuaciones lineales y cuadráticas mediante retos interactivos.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mate Challenge">
+  <title>Matemática Challenge</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Matemática Challenge, inicio">
+      <span class="brand-mark">∑</span><span>MATEMÁTICA <b>CHALLENGE</b></span>
+    </a>
+    <button id="installBtn" class="button button-outline hidden" type="button">Instalar aplicación</button>
+  </header>
+
+  <main class="container">
+    <section id="inicio" class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">APRENDE · PRACTICA · SUPÉRATE</span>
+        <h1>Las matemáticas<br><span>son un desafío.</span></h1>
+        <p>Domina las ecuaciones lineales y cuadráticas con ejercicios, misiones y retos diseñados para aprender paso a paso.</p>
+        <a class="button button-gold" href="#acceso">Comenzar ahora <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-equation" aria-label="Ejemplos de ecuaciones">
+        <div class="equation-card"><small>ECUACIÓN LINEAL</small><strong>2x + 5 = 17</strong><span>Encuentra el valor de x</span></div>
+        <div class="equation-card equation-card-offset"><small>ECUACIÓN CUADRÁTICA</small><strong>x² − 5x + 6 = 0</strong><span>Descubre sus soluciones</span></div>
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+      </div>
+    </section>
+
+    <section id="acceso" class="section access-section">
+      <div class="section-heading"><span class="eyebrow">TU ESPACIO DE APRENDIZAJE</span><h2>¿Cómo deseas ingresar?</h2><p>Selecciona tu perfil para continuar.</p></div>
+      <div class="role-grid">
+        <article class="role-card">
+          <div class="role-icon">⌘</div><h3>Profesor</h3><p>Administra actividades, crea retos y revisa el progreso registrado en este dispositivo.</p>
+          <button class="button button-dark" id="teacherEnter" type="button">Ingresar como profesor</button>
+        </article>
+        <article class="role-card featured">
+          <div class="role-icon">✦</div><h3>Estudiante</h3><p>Resuelve problemas, gana puntos y avanza por niveles de dificultad.</p>
+          <button class="button button-gold" id="studentEnter" type="button">Ingresar como estudiante</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="workspace" class="section workspace hidden" aria-live="polite">
+      <div class="workspace-header"><div><span class="eyebrow" id="workspaceEyebrow">ÁREA DE APRENDIZAJE</span><h2 id="workspaceTitle">Bienvenido</h2></div><button class="button button-outline" id="logoutBtn" type="button">Cambiar perfil</button></div>
+      <div id="studentPanel" class="hidden">
+        <div class="student-summary">
+          <div><span class="muted">Participante</span><strong id="studentNameDisplay">Estudiante</strong></div>
+          <div><span class="muted">Puntos acumulados</span><strong id="scoreDisplay">0</strong></div>
+          <div><span class="muted">Retos completados</span><strong id="completedDisplay">0</strong></div>
+        </div>
+        <div class="challenge-toolbar"><div><h3>Elige tu desafío</h3><p class="muted">Lee cada problema y escribe tu respuesta.</p></div><select id="topicFilter" aria-label="Filtrar por tema"><option value="todos">Todos los temas</option><option value="lineal">Ecuaciones lineales</option><option value="cuadratica">Ecuaciones cuadráticas</option></select></div>
+        <div id="challengeList" class="challenge-grid"></div>
+        <div id="quizPanel" class="quiz-card hidden">
+          <div class="quiz-top"><span class="eyebrow" id="quizTopic">RETO</span><button id="closeQuiz" class="text-button" type="button">Cerrar ×</button></div>
+          <h3 id="quizTitle">Resuelve el problema</h3><p id="quizQuestion"></p>
+          <label for="answerInput" class="field-label">Tu respuesta</label>
+          <input id="answerInput" type="text" inputmode="decimal" placeholder="Escribe el resultado" autocomplete="off">
+          <p class="hint" id="answerHint">Puedes usar números negativos y decimales.</p>
+          <button id="checkAnswer" class="button button-gold" type="button">Comprobar respuesta</button>
+          <div id="feedback" class="feedback" role="status"></div>
+        </div>
+      </div>
+      <div id="teacherPanel" class="hidden">
+        <div class="notice"><strong>Modo profesor</strong><p>Este panel administra los ejercicios y muestra los resultados guardados en el navegador actual. No sincroniza datos entre dispositivos.</p></div>
+        <div class="teacher-stats"><div class="stat-card"><span class="muted">Retos disponibles</span><strong id="teacherChallengeCount">0</strong></div><div class="stat-card"><span class="muted">Intentos registrados</span><strong id="teacherAttempts">0</strong></div><div class="stat-card"><span class="muted">Respuestas correctas</span><strong id="teacherCorrect">0</strong></div></div>
+        <div class="teacher-columns">
+          <form id="challengeForm" class="form-card">
+            <h3>Crear un nuevo reto</h3>
+            <label class="field-label" for="newTitle">Título del reto</label><input id="newTitle" required maxlength="70" placeholder="Ej. El número misterioso">
+            <label class="field-label" for="newTopic">Tema</label><select id="newTopic"><option value="lineal">Ecuación lineal</option><option value="cuadratica">Ecuación cuadrática</option></select>
+            <label class="field-label" for="newQuestion">Enunciado del problema</label><textarea id="newQuestion" required rows="4" maxlength="500" placeholder="Escribe el problema que resolverá el estudiante..."></textarea>
+            <label class="field-label" for="newAnswer">Respuesta correcta</label><input id="newAnswer" required placeholder="Ej. 6 o 2,3">
+            <label class="field-label" for="newHint">Pista (opcional)</label><input id="newHint" maxlength="180" placeholder="Una pista para orientar al estudiante">
+            <button class="button button-dark" type="submit">Guardar reto</button><p class="form-message" id="formMessage" role="status"></p>
+          </form>
+          <div class="form-card"><h3>Banco de retos</h3><p class="muted">Puedes activar o eliminar los retos personalizados.</p><div id="teacherChallengeList" class="teacher-challenge-list"></div><button id="exportResults" class="button button-outline full-width" type="button">Exportar resultados (CSV)</button><button id="resetData" class="text-button danger" type="button">Borrar datos locales</button></div>
+        </div>
+        <div class="form-card results-card"><h3>Resultados registrados en este dispositivo</h3><div class="table-wrap"><table><thead><tr><th>Estudiante</th><th>Reto</th><th>Resultado</th><th>Fecha</th></tr></thead><tbody id="resultsTable"><tr><td colspan="4">Todavía no hay resultados.</td></tr></tbody></table></div></div>
+      </div>
+    </section>
+
+    <section class="section benefits"><div class="section-heading"><span class="eyebrow">APRENDIZAJE ACTIVO</span><h2>Aprender haciendo</h2></div><div class="benefit-grid"><div><span>01</span><h3>Comprende</h3><p>Identifica los elementos y procedimientos de cada ecuación.</p></div><div><span>02</span><h3>Resuelve</h3><p>Aplica estrategias algebraicas para encontrar soluciones.</p></div><div><span>03</span><h3>Progresa</h3><p>Practica, revisa tus errores y mejora tus resultados.</p></div></div></section>
+  </main>
+  <footer><span class="brand-mark small">∑</span><p>MATEMÁTICA CHALLENGE · Aprende a tu ritmo.</p><small>Herramienta educativa de práctica matemática.</small></footer>
+
+  <dialog id="nameDialog" class="modal"><form method="dialog" id="nameForm"><button class="modal-close" value="cancel" aria-label="Cerrar">×</button><span class="eyebrow">BIENVENIDO</span><h2>¿Cómo te llamas?</h2><p>Tu nombre aparecerá en el registro de tus avances en este dispositivo.</p><label class="field-label" for="studentName">Nombre del estudiante</label><input id="studentName" required maxlength="40" placeholder="Escribe tu nombre"><button class="button button-gold full-width" value="default">Continuar</button></form></dialog>
+  <dialog id="teacherDialog" class="modal"><form method="dialog" id="teacherForm"><button class="modal-close" value="cancel" aria-label="Cerrar">×</button><span class="eyebrow">ACCESO DOCENTE</span><h2>Área del profesor</h2><p>Ingresa el PIN local para abrir el panel docente.</p><label class="field-label" for="teacherPin">PIN de acceso</label><input id="teacherPin" type="password" inputmode="numeric" maxlength="8" placeholder="PIN" required><small class="hint">PIN inicial: 2468. Cámbialo en app.js antes de publicar.</small><button class="button button-dark full-width" value="default">Ingresar</button><p id="teacherError" class="error-text"></p></form></dialog>
+  <script src="app.js" defer></script>
+</body>
+</html>
